@@ -1,30 +1,50 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="container">
+    <sidebar id="desktop"/>
+    <router-view style="flex:1"/>
+    <navbar id="mobile"/>
   </div>
-  <router-view/>
 </template>
+<script>
+import Sidebar from './components/Sidebar/Sidebar.vue';
+import Navbar from './components/Navbar/Navbar.vue';
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+export default {
+  components:{
+    Sidebar,
+    Navbar
+  }
 }
 
-#nav {
-  padding: 30px;
+</script>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+<style lang="scss">
+@import "~bulma/css/bulma.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,700&display=swap');
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+
+
+@media (max-width: 768px){
+  #desktop{
+    display: none;
+  }
+  #container{
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fc;
+  }
+}
+@media (min-width: 769px){
+  #mobile{
+    display: none;
+  }
+  #container{
+    width: 100vw;
+    height: 100%;
+    background-color: #f8f9fc;
+    display: flex;
   }
 }
 </style>

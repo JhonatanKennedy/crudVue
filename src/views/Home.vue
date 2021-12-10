@@ -1,18 +1,42 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="hero " >
+    <div class="hero-body">
+      <h1 class="is-size-3 title">Home</h1>
+        <div class="box column">
+          <card-city />
+          <card-city />
+          <card-city />
+          <card-city />
+          <card-city />
+          <button @click="teste()">teste</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CardCity from "../components/CardCity/CardCity.vue";
+import Service from "../services.js";
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  name: 'home',
+  components:{
+    CardCity
+  },
+  methods:{
+    teste(){
+      Service.getCity('Cumaru','Br').then((res) =>{
+        console.log(res.data)
+      })
+    }
   }
 }
 </script>
+<style scoped>
+
+</style>
