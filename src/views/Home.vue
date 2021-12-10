@@ -66,7 +66,7 @@ input{
   background-color: #f8f9fc;
 }
 input[type="text"]{
-  color: rgb(66, 66, 66);
+  color: rgb(92, 91, 91);
 }
 input:focus{
   outline: none;
