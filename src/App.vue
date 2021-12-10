@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <sidebar id="desktop"/>
-    <router-view style="flex:1"/>
+    <router-view/>
     <navbar id="mobile"/>
   </div>
 </template>
