@@ -1,25 +1,23 @@
 <template>
-  <div class="container">
-    <div class="card mt-3 mb-3 p-6 level" >
-      <div id="teste" class="level-item">
-        <div class="level-item">
-          Cidade:
-          <br>
-          <p>{{ this.name }}</p>
+  <div class="columns box mb-5">
+    <div class="column level" >
+      <div class="rightContainer level-item">
+        <i :class="icon" class="is-size-1 m-1"/>
+        <div class="m-1">
+          <b>{{this.temp}} C°</b>
+          <p>Humidade: {{humidity}}% </p>
         </div>
       </div>
-      <div class="level-item">
-        Clima:
-        <p>{{ this.weather.description }}</p>
+    </div>
+    <div class="column level">
+      <div class="level-item middleContainer">
+        <b>{{this.name}}</b>
+        <p>{{this.weather}}</p>
       </div>
+    </div>
+    <div class="column level">
       <div class="level-item">
-        teste
-      </div>
-      <div class="level-item">
-        teste
-      </div>
-      <div class="level-item">
-        Remover x
+      Remover x
       </div>
     </div>
   </div>
@@ -34,14 +32,15 @@ export default {
     city:{
       type:String
     },
-    country:{
-      type:String
-    }
   },
   data(){
     return{
-      weather:{},
-      city:''
+      weather:'',
+      name:'',
+      temp:'',
+      icon:'',
+      description:'',
+      humidity:'',
     }
   },
   created(){
@@ -49,17 +48,50 @@ export default {
   },
   methods:{
     getCityWeather(){
-      Service.getCity(this.city,this.country).then((response) =>{
-        this.weather = response.data.weather[0];
-        this.city = response.data.name
-        console.log(response.data)
-      })
+      Service.getCity(this.city).then((response) =>{
+        const {data} = response;
+        const description = data.weather[0].description;
+        this.weather = description[0].toUpperCase() + description.slice(1);
+        this.name = data.name;
+        this.temp = data.main.temp;
+        this.humidity = data.main.humidity;
+        const icon = data.weather[0].icon;
+        this.icon = this.chooseIcon(icon);
+      });
+    },
+    chooseIcon(icon){
+        if(icon == '01d' || icon == '01n'){
+          return 'far fa-sun';
+        }else if(icon == '02d' || icon == '02n'){
+          return 'fas fa-cloud-sun';
+        }else if(icon == '03d' || icon == '03n'){
+          return 'fas fa-cloud';
+        }else if(icon == '04d' || icon == '04n'){
+          return 'fas fa-cloud';
+        }else if(icon == '09d' || icon == '09n'){
+          return 'fas fa-cloud-rain';
+        }else if(icon == '10d' || icon == '10n'){
+          return 'fas fa-cloud-showers-heavy';
+        }else if(icon == '11d' || icon == '11n'){
+          return 'fas fa-bolt';
+        }else if(icon == '13d' || icon == '13n'){
+          return 'fas fa-snowflake';
+        }else if(icon == '50d' || icon == '50n'){
+          return 'fas fa-stream';
+        }
     }
   }
-  //https://openweathermap.org/weather-conditions
 }
 </script>
 
 <style scoped>
-
+.rightContainer{
+  display: flex;
+  align-items: center;
+}
+.middleContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 </style>

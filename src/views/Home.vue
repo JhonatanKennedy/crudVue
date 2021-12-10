@@ -6,15 +6,15 @@
           <h1 class="is-size-3">Home</h1>
         </div>
         <div class="level-item">
-          <input type="text" size="40" v-model="search" placeholder="ex: brasilia,br">
+          <input type="text" size="40" v-model="search" placeholder="ex: brasilia">
           <button  @click="onHandleSearch()" id="buttonAdd">
             <i class="fas fa-plus"/>
           </button>
         </div>
       </div>
-      <div class="box column">
-        <div v-for="(item,index) in cities" :key="index">
-          <card-city :city="item.city" :country="item.country"/>
+      <div class="box">
+        <div v-for="(city,index) in cities" :key="index">
+          <card-city :city="city"/>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
 
 <script>
 import CardCity from "../components/CardCity/CardCity.vue";
-
+import Service from "../services";
 
 export default {
   name: 'home',
@@ -34,11 +34,11 @@ export default {
     return{
       search:'',
       cities:[
-        {city:'brasilia',country:'br'},
-        {city:'new york',country:'usa'},
-        {city:'london',country:'uk'},
-        {city:'tokyo',country:'jp'},
-        {city:'paris',country:'fr'},
+        'brasilia',
+        'new york',
+        'london',
+        'tokyo',
+        'paris'
       ],
     }
   },
@@ -47,7 +47,11 @@ export default {
   },
   methods:{
     onHandleSearch(){
-      console.log(this.search)
+      Service.getCity(this.search).then((response) => {
+        console.log(response.data)
+      }).catch((err) => {
+        console.log('deu errado')
+      });
     }
   },
   computed:{
