@@ -6,7 +6,6 @@
     </div>
 
     <navbar-item :isOpen="isOpen" icon="fas fa-user" name="About" to="/about"/>
-    <navbar-item :isOpen="isOpen" icon="fas fa-history" name="History" to="/history"/>
     <navbar-item :isOpen="isOpen" icon="fas fa-home" name="Home" to="/"/>
 
   </div>
@@ -54,7 +53,7 @@ export default {
   box-shadow: 9px 8px 16px -8px rgba(0,0,0,0.48);
 }
 .navBarContainerOpen{
-  height: 250px;
+  height: 150px;
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-between;

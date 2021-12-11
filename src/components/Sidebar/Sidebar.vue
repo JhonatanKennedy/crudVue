@@ -4,7 +4,6 @@
       <sidebar-logo :isOpen="isOpen"/>
       <div class="navBody" :class="{navbarBodyOpen: isOpen}">
         <sidebar-item icon="fas fa-home" :isOpen="isOpen" name="Home" to="/"/>
-        <sidebar-item icon="fas fa-history" :isOpen="isOpen" name="History" to="/history"/>
         <sidebar-item icon="fas fa-user" :isOpen="isOpen" name="About" to="/about"/>  
       </div>
       <div class="navFooter" :class="{navFooterOpen: isOpen}">
@@ -43,13 +42,13 @@ export default {
 .backSidebar{
   width: 70px;
   height: 100%;
-  z-index: -1000;
+  z-index: -10;
   transition: width 0.3s;
 }
 .backSidebarOpen{
   width: 250px;
   height: 100%;
-  z-index: -1000;
+  z-index: -10;
 }
 .navbar{
   position: fixed;
@@ -61,6 +60,7 @@ export default {
   justify-content: space-between;
   background-color: #365ecd;
   transition: width 0.3s;
+  z-index: 0;
 }
 .navBody{
   width: 100%;

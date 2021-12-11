@@ -6,14 +6,19 @@
           <h1 class="is-size-3">Home</h1>
         </div>
         <div class="level-item">
-          <input type="text" size="40" v-model="search" placeholder="ex: brasilia">
-          <button  @click="onHandleSearch()" id="buttonAdd">
+          <input type="text" size="40" @keyup.enter="onHandleSearch" v-model="search" placeholder="ex: brasilia">
+          <div class="errorContainer">
+            <span class="errorHidden" :class="{errorVisible: error}">
+              Cidade digitada inválida
+            </span>
+          </div>
+          <button @click="onHandleSearch"  id="buttonAdd">
             <i class="fas fa-plus"/>
           </button>
         </div>
       </div>
-      <div class="box">
-        <div v-for="(city,index) in cities" :key="index">
+      <div class="box" :key="cities">
+        <div v-for="(city) in cities" :key="city">
           <card-city :city="city"/>
         </div>
       </div>
@@ -28,7 +33,7 @@ import Service from "../services";
 export default {
   name: 'home',
   components:{
-    CardCity
+    CardCity,
   },
   data(){
     return{
@@ -40,6 +45,7 @@ export default {
         'tokyo',
         'paris'
       ],
+      error:false
     }
   },
   created(){
@@ -47,22 +53,37 @@ export default {
   },
   methods:{
     onHandleSearch(){
-      Service.getCity(this.search).then((response) => {
-        console.log(response.data)
-      }).catch((err) => {
-        console.log('deu errado')
+      Service.getCity(this.search).then(() => {
+        let cities = this.cities;
+        const isIncities = cities.findIndex((el) => el == this.search);
+
+        if(isIncities == -1){
+          cities.push(this.search);
+          this.cities = cities
+        }
+          this.error = false;
+      }).catch(() => {
+        this.error = true;
       });
     }
   },
-  computed:{
-    getCities(){
-      console.log(this.$store.state.cities)
-      this.cities = this.$store.state.cities;
+  computed:{  
+    getCityRemove(){
+      return this.$store.state.cityToRemove;
     }
+  },
+  watch:{
+    getCityRemove(newValue){
+      const isIncities = this.cities.findIndex((el) => el == newValue);
+      if(isIncities != -1){
+        this.cities.splice(isIncities,1);
+      } 
+    },
   }
 }
 </script>
 <style scoped>
+
 input{
   border: none;
   border-bottom: 2px solid grey;
@@ -99,5 +120,20 @@ input:focus{
 #buttonAdd:hover{
   animation-name: bigger;
   animation-duration: 0.5s;
+}
+.errorContainer{
+  position: relative;
+  width: 0;
+}
+.errorHidden{
+  visibility: hidden;
+}
+.errorVisible{
+  visibility: visible;
+  position: absolute;
+  color: red;
+  width: 200px;
+  top: 15px;
+  right: 120px;
 }
 </style>

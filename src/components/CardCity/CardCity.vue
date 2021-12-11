@@ -16,8 +16,10 @@
       </div>
     </div>
     <div class="column level">
-      <div class="level-item">
-      Remover x
+      <div class="level-item" >
+      <button id="buttonRemove" @click="onHandleRemove">
+        Remover x
+      </button>
       </div>
     </div>
   </div>
@@ -79,6 +81,9 @@ export default {
         }else if(icon == '50d' || icon == '50n'){
           return 'fas fa-stream';
         }
+    },
+    onHandleRemove(){
+      this.$store.state.cityToRemove = this.city;
     }
   }
 }
@@ -93,5 +98,17 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+#buttonRemove{
+  font-size: 15px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  color: #4a4a4a;
+}
+#buttonRemove:hover{
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 5px;
 }
 </style>
